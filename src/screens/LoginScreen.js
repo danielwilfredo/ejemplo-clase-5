@@ -1,38 +1,80 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert} from 'react-native';
 import { TextInput, Button, Text } from 'react-native-paper';
 
 const LoginScreen = ({logueado, setLogueado}) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
+  //Estado de la app
+  const [alias, setAlias] = useState('');
+  const [clave, setClave] = useState('');
+  let ip = `10.10.0.165`;
+  const handleLogin = async () => {
     // Lógica de inicio de sesión
-    console.log('Email:', email);
-    console.log('Password:', password);
-    setLogueado(!logueado)
+   
+    let url=`http://${ip}/coffeeshop/api/services/admin/administrador.php?action=logIn`;
+    const formData = new FormData();
+    formData.append('alias', alias)
+    formData.append('clave', clave)
+
+    //Realizar la petición http 
+    const fetchApi = await fetch(url, {
+      method: 'POST',
+      body: formData
+    })
+    const datos = await fetchApi.json();
+    if(datos.status){
+      setLogueado(!logueado)
+    }
+    else {
+      console.log(datos);
+      // Alert the user about the error
+      Alert.alert('Error sesion', datos.error);
+    }
+
+
   };
+
+  
+  const handleLogOut = async ()=>{
+    const url = `http://${ip}/coffeeshop/api/services/admin/administrador.php?action=logOut`;
+     //Realizar la petición http 
+     const fetchApi = await fetch(url)
+    const datos = await fetchApi.json();
+    if(datos.status){
+      setLogueado(false)
+    }
+    else {
+      console.log(datos);
+      // Alert the user about the error
+      Alert.alert('Error sesion', datos.error);
+    }
+
+
+  }
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Bienvenido</Text>
       <TextInput
-        label="Correo Electrónico"
-        value={email}
-        onChangeText={text => setEmail(text)}
+        label="Usuario"
+        value={alias}
+        onChangeText={setAlias}
         style={styles.input}
         keyboardType="email-address"
         autoCapitalize="none"
       />
       <TextInput
         label="Contraseña"
-        value={password}
-        onChangeText={text => setPassword(text)}
+        value={clave}
+        onChangeText={setClave}
         style={styles.input}
         secureTextEntry
       />
       <Button mode="contained" onPress={handleLogin} style={styles.button}>
         Iniciar Sesión
+      </Button>
+      <Button mode="contained" onPress={handleLogOut} style={styles.button}>
+        Cerrar Sesión
       </Button>
     </View>
   );

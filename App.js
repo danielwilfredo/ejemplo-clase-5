@@ -22,7 +22,9 @@ export default function App() {
     <NavigationContainer>
       {logueado ?
         // Si la aplicación está lista, muestra el componente BottomTab
-        <BottomTab />
+        <BottomTab 
+        logueado={logueado}
+        setLogueado={setLogueado}/>
         :
         // Si la aplicación no está lista, muestra el componente NavStack
         <LoginNav
