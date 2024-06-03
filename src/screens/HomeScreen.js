@@ -49,6 +49,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 20,
   },
+  button: {
+    marginTop: 10,
+    padding: 10,
+    backgroundColor: '#6200ee',
+  },
 });
+
+
 
 export default HomeScreen;
