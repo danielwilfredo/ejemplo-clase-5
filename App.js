@@ -1,20 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// Hooks de React
+import { useEffect, useState } from 'react';
+// Utilidades de React Navigation
+import { NavigationContainer } from '@react-navigation/native';
 
+import LoginNav from './src/navigation/LoginNav';
+import BottomTab from './src/navigation/BottomTab';
+
+//Componente principal
 export default function App() {
+
+  // logueado: Variable para indicar si la sesion ya está lista
+  // setLogueado: Función para actualizar la variable logueado
+  const [logueado, setLogueado] = useState(false);
+
+  useEffect(()=>{
+    setLogueado(false)
+  },[])
+
+  // Retorna el contenedor de navegación
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      {logueado ?
+        // Si la aplicación está lista, muestra el componente BottomTab
+        <BottomTab />
+        :
+        // Si la aplicación no está lista, muestra el componente NavStack
+        <LoginNav
+        logueado={logueado}
+        setLogueado={setLogueado}
+        />
+      }
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
