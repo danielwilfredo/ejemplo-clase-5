@@ -12,6 +12,7 @@ export default function LoginNav({ logueado, setLogueado }) {
         options={{ headerShown: false }}
       >
         {props => <LoginScreen {...props} setLogueado={setLogueado} logueado={logueado} />}
+        
       </Stack.Screen>
     </Stack.Navigator>
   );

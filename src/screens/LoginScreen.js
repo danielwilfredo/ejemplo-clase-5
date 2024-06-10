@@ -12,6 +12,7 @@ const LoginScreen = ({logueado, setLogueado}) => {
     // Lógica de inicio de sesión
    
     let url=`http://${ip}/coffeeshop/api/services/admin/administrador.php?action=logIn`;
+
     const formData = new FormData();
     formData.append('alias', alias)
     formData.append('clave', clave)
@@ -21,6 +22,7 @@ const LoginScreen = ({logueado, setLogueado}) => {
       method: 'POST',
       body: formData
     })
+    
     const datos = await fetchApi.json();
     if(datos.status){
       setLogueado(!logueado)

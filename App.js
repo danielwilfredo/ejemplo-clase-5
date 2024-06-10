@@ -19,6 +19,7 @@ export default function App() {
 
   // Retorna el contenedor de navegación
   return (
+    
     <NavigationContainer>
       {logueado ?
         // Si la aplicación está lista, muestra el componente BottomTab
